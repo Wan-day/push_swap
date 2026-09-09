@@ -1,0 +1,41 @@
+void	put_error()
+{
+	ft_putendl_fd("Error", 2);
+}
+
+int	main(int argc, char **argv)
+{
+	t_options   opts;       // Will hold strategy + bench settings, filled in by extract_options
+	t_bench		bench;		// Will hold values needed for --bench option.
+	int         remaining;  // Will hold how many tokens are left after flags are stripped out
+	char        **tokens;   // Array of strings — the argv tokens that are numbers, not flags
+	int         *nums;      // Array of actual parsed integers
+	int         count;      // How many integers are in nums
+	t_stack     *a;         // Pointer to stack A (the linked list, head node)
+	t_stack     *b;         // Pointer to stack B, starts as NULL (empty)
+	
+	ft_bzero(&bench, sizeof(bench));
+	// Parses the arguments and extracts options if any are present. 
+	// Sets strategy for opts and bench.
+    tokens = extract_options(argc, argv, &opts, &remaining, &bench); 
+
+	// Parses and validates the number tokens, calculates disorder and adds it to bench.
+    nums = parse_and_validate_tokens(tokens, remaining, &count, &bench); 
+	if (!nums)
+		return (put_error(), 1);
+
+	// Builds the main stack from the number tokens.
+	a = build_stack(nums, count); // first arg = top of stack, per subject
+	free(nums);
+	b = NULL;
+
+	// Checks if the stack is sorted and if not - calls the sorting funtcion. 
+	// Adds op count to bench.
+	if (!is_sorted(a))
+		push_swap(&a, &b, opts.strategy, &bench);
+
+	// Prints benchmark if asked for by the argument.
+	if (opts.bench)
+		print_benchmark(bench);
+    return (0);
+}
