@@ -2,6 +2,7 @@
 # define PUSH_SWAP_H
 
 # include "libft.h"
+# include <stdlib.h>
 # include "ft_printf.h"
 
 typedef enum e_op
@@ -30,7 +31,7 @@ typedef enum s_strategy
 
 typedef struct s_stack
 {
-	int				*num;
+	int				num;
 	struct s_stack	*next;
 	struct s_stack	*prev;
 }	t_stack;
