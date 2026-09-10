@@ -1,8 +1,3 @@
-void	put_error()
-{
-	ft_putendl_fd("Error", 2);
-}
-
 int	main(int argc, char **argv)
 {
 	t_options   opts;       // Will hold strategy + bench settings, filled in by extract_options
