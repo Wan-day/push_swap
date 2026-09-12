@@ -15,6 +15,7 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 TARGET = libft.a
+OBJS = $(SRCS:.c=.o)
 SRCS = ft_tolower.c ft_toupper.c ft_isprint.c \
 	   ft_isascii.c ft_isalnum.c ft_isdigit.c \
 	   ft_isalpha.c ft_atoi.c ft_strlen.c \
@@ -29,7 +30,6 @@ SRCS = ft_tolower.c ft_toupper.c ft_isprint.c \
 	   ft_putnbr_fd.c ft_lstnew.c ft_lstadd_front.c \
 	   ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c \
 	   ft_lstiter.c ft_lstmap.c ft_lstsize.c ft_lstlast.c
-OBJS = $(SRCS:.c=.o)
 
 all: $(TARGET)
 

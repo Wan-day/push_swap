@@ -2,7 +2,6 @@
 # define PUSH_SWAP_H
 
 # include "libft.h"
-# include <stdlib.h>
 # include "ft_printf.h"
 
 typedef enum e_op
