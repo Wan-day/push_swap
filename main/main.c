@@ -19,13 +19,12 @@ int	main(int argc, char **argv)
 	// Sets strategy for opts and bench.
     tokens = extract_options(argc, argv, &opts, &remaining, &bench); 
 
-	// Parses and validates the number tokens, calculates disorder and adds it to bench.
-	// DONT FORGET TO FREE TOKENS INSIDE THE FUNCTION!!!!
-    nums = parse_and_validate_tokens(tokens, remaining, &count, &bench); 
+	// Parses and validates the number tokens:w:.
+    nums = parse_tokens(tokens, remaining, &count); 
 	if (!nums)
 		return (put_error(), 1);
 
-	// Builds the main stack from the number tokens.
+	// Builds the main stack from the number tokens. ALSO calculates disorder.
 	a = build_stack(nums, count); // First arg = top of stack, per subject
 	free(nums);
 	b = NULL;
