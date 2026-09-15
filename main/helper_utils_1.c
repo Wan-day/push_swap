@@ -1,12 +1,6 @@
-void	put_error()
-{
-	ft_putendl_fd("Error", 2);
-	exit(1);
-}
-
 void	set_strategy(t_bench *bench, t_options *opts, int strategy)
 {
-	if (opts->strategy_set == 0 && strategy != BENCH)
+	if (opts->strategy_set == 0 && strategy >= SIMPLE && strategy <= ADAPTIVE)
 	{
 		opts->strategy = strategy;
 		bench->strategy = strategy;
@@ -26,7 +20,7 @@ int is_bench(char *str, t_bench *bench, t_options *opts)
 	return (0);
 }
 
-int is_options(char *str, t_bench *bench, t_options *opts)
+int is_strategy(char *str, t_bench *bench, t_options *opts)
 {
 	if (ft_strcmp(str, "--simple") == 0)
 	{
@@ -52,28 +46,32 @@ int is_options(char *str, t_bench *bench, t_options *opts)
 	return (0);
 }
 
+int	is_options(char	*str, t_bench *bench, t_options *opts)
+{
+	if (opts->bench == 0 && is_bench(str, bench, opts))
+		return (1);
+	else if (opts->strategy_set == 0 && is_strategy(str, bench, opts))
+		return (1);
+	else
+		return (0);
+}
+
 char	**extract_options(int argc, char **argv, t_options *opts, int *remaining, t_bench *bench)
 {
 	int		i;
 	int		j;
-	char	*res[remaining];
+	char	res[argc];
 
+	ft_bzero(res, sizeof(res));
+	*remaining = argc;
 	i = 1;
 	j = 0;
 	if (argc < 2)
 		return (NULL);
 	while (i < argc)
 	{
-		if (is_bench(argv[i], bench, opts) && opts->bench == 0)
-		{
-			argv[i] = NULL;
+		if (is_options(argv[i], bench, opts))
 			remaining--;
-		}
-		else if ((argv[i] != NULL) && is_options(argv[i], bench, opts))
-		{
-			argv[i] = NULL;
-			remaining--;
-		}
 		else
 		{
 			res[j] = argv[i];
@@ -81,5 +79,5 @@ char	**extract_options(int argc, char **argv, t_options *opts, int *remaining, t
 		}
 		i++;
 	}
-	return (res);
+	return (&res);
 }
