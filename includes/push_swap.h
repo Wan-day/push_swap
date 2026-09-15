@@ -25,7 +25,8 @@ typedef enum s_strategy
     SIMPLE,
     MEDIUM,
     COMPLEX,
-    ADAPTIVE
+    ADAPTIVE,
+	BENCH
 }   t_strategy;
 
 typedef struct s_stack
@@ -37,23 +38,15 @@ typedef struct s_stack
 
 typedef struct s_options
 {
-    t_strategy	strategy;
+    int			strategy;
     int			strategy_set;
     int			bench;
 }   t_options;
 
-typedef enum s_strategy
-{
-    SIMPLE,
-    MEDIUM,
-    COMPLEX,
-    ADAPTIVE
-}   t_strategy;
-
 typedef struct s_bench
 {
 	double		disorder;
-	t_strategy	strategy;
+	int			strategy;
 	int			total_ops; 
 	int			op_count[OP_COUNT];
 }	t_bench;
