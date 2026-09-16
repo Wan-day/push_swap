@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 	// Parses and validates the number tokens:w:.
     nums = parse_tokens(tokens, remaining, &count); 
 	if (!nums)
-		return (put_error(), 1);
+		return (put_error(), 1); // PERHAPS THIS IS NOT NEEDED BECAUSE THE CHECK HAPPENS INSIDE
 
 	// Builds the main stack from the number tokens. ALSO calculates disorder.
 	a = build_stack(nums, count); // First arg = top of stack, per subject

@@ -6,7 +6,7 @@ void	set_strategy(t_bench *bench, t_options *opts, int strategy)
 		bench->strategy = strategy;
 		opts->strategy_set = 1;
 	}
-	else if (strategy == BENCH)
+	else if (opts->bench == 0 && strategy == BENCH)
 		opts->bench = 1;
 }
 
@@ -71,7 +71,7 @@ char	**extract_options(int argc, char **argv, t_options *opts, int *remaining, t
 	while (i < argc)
 	{
 		if (is_options(argv[i], bench, opts))
-			remaining--;
+			(*remaining)--;
 		else
 		{
 			res[j] = argv[i];

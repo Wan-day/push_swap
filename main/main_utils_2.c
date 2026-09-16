@@ -18,7 +18,7 @@ int	*parse_tokens(char **tokens, int remaining, int *count)
 	int		i;
 	char	**split_tokens;
 	
-	split_tokens = ft_split(tokens, ' ');
+	split_tokens = ft_split(tokens, ' '); // NEED TO FIX THIS IT ONLY PARSES THE FIRST TOKEN
 	if (split_tokens == NULL)
 		put_error();
 	*count = 0;
@@ -31,9 +31,7 @@ int	*parse_tokens(char **tokens, int remaining, int *count)
 	while (i < *count)
 	{
 		if (is_number(tokens[i]))
-		{
 			result[i] = ft_atoi(tokens[i]);
-		}
 		else
 			put_error();
 	}
@@ -48,6 +46,8 @@ t_stack	*stack_new(int content)
 	if (res == NULL)
 		put_error();
 	res->num = content;
+	res->next = *res;
+	res->prev = *res;
 	return (res);
 }
 
