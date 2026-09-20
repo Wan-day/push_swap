@@ -6,12 +6,12 @@
 /*   By: duk <duk@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 13:33:55 by duk               #+#    #+#             */
-/*   Updated: 2026/09/15 13:36:10 by duk              ###   ########.fr       */
+/*   Updated: 2026/09/19 18:02:56 by duk              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+```
 t_stack	*rmv_top(t_stack **s1)
 {
 	t_stack	*x;
@@ -74,3 +74,4 @@ void	pb(t_stack **a, t_stack **b)
 		return ;
 	ins_top (tmp, b);
 }
+```

@@ -6,7 +6,7 @@
 /*   By: duk <duk@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/13 12:29:36 by duk               #+#    #+#             */
-/*   Updated: 2026/09/15 13:30:56 by duk              ###   ########.fr       */
+/*   Updated: 2026/09/16 13:47:36 by duk              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ t_stack	*rmv_top(t_stack **s1)
 	y = (*s1)->next;
 	x->next = y;
 	y->prev = x;
-	if (check == 1)
-		*s1 = NULL;
-	else
+	if (check == 0)
 		*s1 = y;
+	else
+		*s1 = NULL;
 	return (tmp);
 }
 
