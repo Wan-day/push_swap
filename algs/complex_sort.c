@@ -51,6 +51,17 @@ negative int from 0 to size - 1.
 
 For reach bit it calls the radix_check() function and then
 collapses the stack b into the stack a which preserves the ordering.
+
+Complexity: O(nlogn) or log2(n) * (n + ~0.5n)
+log2(n) comes from the the while (i < bits) loop. Bits is essentially log2(n).
+
+n comes from the radix_check() function that always calls one of the
+operations ra() or pb() and it goes over every single values in a.
+
+~0.5n comes from the next loop while(*b), It roughly equals to the
+half of the size of the stack a which are moved to the stack b.
+So essentially for every pb() that happenes there will be a pa().
+And pa() happens roughly half the time when sorting.
  */
 void	complex_sort(t_stack **a, t_stack **b, t_bench *bench, int size)
 {
