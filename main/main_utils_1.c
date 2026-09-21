@@ -1,83 +1,95 @@
-void	set_strategy(t_bench *bench, t_options *opts, int strategy)
+#include "push_swap.h"
+
+/*
+Allocates a node alone in its own circular list (it points to itself).
+Returns NULL if the allocation fails.
+*/
+static t_stack	*stack_new(int content)
 {
-	if (opts->strategy_set == 0 && strategy >= SIMPLE && strategy <= ADAPTIVE)
-	{
-		opts->strategy = strategy;
-		bench->strategy = strategy;
-		opts->strategy_set = 1;
-	}
-	else if (strategy == BENCH)
-		opts->bench = 1;
-}
+	t_stack	*res;
 
-int is_bench(char *str, t_bench *bench, t_options *opts)
-{
-	if (ft_strcmp(str, "--bench") == 0)
-	{
-		set_strategy(bench, opts, BENCH);
-		return (1);
-	}
-	return (0);
-}
-
-int is_strategy(char *str, t_bench *bench, t_options *opts)
-{
-	if (ft_strcmp(str, "--simple") == 0)
-	{
-		set_strategy(bench, opts, SIMPLE);
-		return (1);
-	}
-	else if (ft_strcmp(str, "--medium") == 0)
-	{
-		set_strategy(bench, opts, MEDIUM);
-		return (1);
-	}
-	else if (ft_strcmp(str, "--complex") == 0)
-	{
-		set_strategy(bench, opts, COMPLEX);
-		return (1);
-	}
-	else if (ft_strcmp(str, "--adaptive") == 0)
-	{
-		set_strategy(bench, opts, ADAPTIVE);
-		return (1);
-	}
-
-	return (0);
-}
-
-int	is_options(char	*str, t_bench *bench, t_options *opts)
-{
-	if (opts->bench == 0 && is_bench(str, bench, opts))
-		return (1);
-	else if (opts->strategy_set == 0 && is_strategy(str, bench, opts))
-		return (1);
-	else
-		return (0);
-}
-
-char	**extract_options(int argc, char **argv, t_options *opts, int *remaining, t_bench *bench)
-{
-	int		i;
-	int		j;
-	char	res[argc];
-
-	ft_bzero(res, sizeof(res));
-	*remaining = argc;
-	i = 1;
-	j = 0;
-	if (argc < 2)
+	res = ft_calloc(1, sizeof(t_stack));
+	if (res == NULL)
 		return (NULL);
-	while (i < argc)
+	res->num = content;
+	res->next = res;
+	res->prev = res;
+	return (res);
+}
+
+/*
+Adds a node holding content at the bottom of the stack: between the
+current last node (stack->prev) and the head. Returns 0 if the
+allocation fails, 1 otherwise.
+*/
+static int	stack_add(int content, t_stack *stack)
+{
+	t_stack	*node;
+	t_stack	*last;
+
+	node = stack_new(content);
+	if (node == NULL)
+		return (0);
+	last = stack->prev;
+	last->next = node;
+	node->prev = last;
+	node->next = stack;
+	stack->prev = node;
+	return (1);
+}
+
+/*
+Builds stack a from the array of count numbers (count >= 1). The first
+number is the top of the stack, as the subject requires. If an
+allocation fails, frees the stack built so far and nums, then exits
+with "Error". On success nums is not freed: it still belongs to the
+caller.
+*/
+t_stack	*build_stack(int *nums, int count)
+{
+	t_stack	*head;
+	int		i;
+
+	head = stack_new(nums[0]);
+	if (head == NULL)
 	{
-		if (is_options(argv[i], bench, opts))
-			remaining--;
-		else
+		free(nums);
+		put_error();
+	}
+	i = 1;
+	while (i < count)
+	{
+		if (!stack_add(nums[i], head))
 		{
-			res[j] = argv[i];
-			j++;
+			free(nums);
+			free_stack(&head);
+			put_error();
 		}
 		i++;
 	}
-	return (&res);
+	return (head);
+}
+
+/*
+Reads argv completely: options, numbers, validation, and builds stack a.
+*count receives the number of elements. Returns NULL (with nothing to
+free) if argv holds no number. Temporary arrays are freed here.
+*/
+t_stack	*load_stack(int argc, char **argv, t_options *opts, int *count)
+{
+	char	**tokens;
+	int		*nums;
+	t_stack	*head;
+
+	tokens = extract_options(argc, argv, opts);
+	if (tokens[0] == NULL)
+	{
+		free(tokens);
+		return (NULL);
+	}
+	nums = parse_tokens(tokens, count);
+	free(tokens);
+	head = build_stack(nums, *count);
+	free(nums);
+	return (head);
 }

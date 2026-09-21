@@ -1,45 +1,36 @@
 #include "push_swap.h"
 
+/*
+Program entry point.
+1. Read the options and the numbers and build stack a (load_stack).
+   No numbers means nothing to do: exit silently.
+2. Record the strategy and the initial disorder for the benchmark.
+3. Sort stack a only if it is not already sorted.
+4. Print the benchmark on stderr if --bench was given.
+5. Free both stacks.
+*/
 int	main(int argc, char **argv)
 {
-	t_options   opts;       // Will hold strategy + bench settings, filled in by extract_options
-	t_bench		bench;		// Will hold values needed for --bench option.
-	int         remaining;  // Will hold how many tokens are left after flags are stripped out
-	char        **tokens;   // Array of strings — the argv tokens that are numbers, not flags
-	int         *nums;      // Array of actual parsed integers
-	int         count;      // How many integers are in nums
-	t_stack     *a;         // Pointer to stack A (the linked list, head node)
-	t_stack     *b;         // Pointer to stack B, starts as NULL (empty)
-	
-	// Zero the structs so that the values inside are accessible.
-	ft_bzero(&bench, sizeof(bench));
+	t_options	opts;
+	t_bench		bench;
+	t_stack		*a;
+	t_stack		*b;
+	int			count;
+
 	ft_bzero(&opts, sizeof(opts));
-
-	// Parses the arguments and extracts options if any are present. 
-	// Sets strategy for opts and bench.
-    tokens = extract_options(argc, argv, &opts, &remaining, &bench); 
-
-	// Parses and validates the number tokens:w:.
-    nums = parse_tokens(tokens, remaining, &count); 
-	if (!nums)
-		return (put_error(), 1);
-
-	// Builds the main stack from the number tokens. ALSO calculates disorder.
-	a = build_stack(nums, count); // First arg = top of stack, per subject
-	free(nums);
+	ft_bzero(&bench, sizeof(bench));
+	opts.strategy = ADAPTIVE;
+	a = load_stack(argc, argv, &opts, &count);
+	if (a == NULL)
+		return (0);
 	b = NULL;
-
-	// Checks if the stack is sorted and if not - calls the sorting funtcion. 
-	// Adds operations count to bench.
-	if (!is_sorted(a))
-		sort_stack(&a, &b, opts.strategy, &bench);
-
-	// Prints benchmark if asked for by the option.
+	bench.strategy = opts.strategy;
+	bench.disorder = calculate_disorder(a, count);
+	if (!is_sorted(a, count))
+		sort_stack(&a, &b, &bench, count);
 	if (opts.bench)
-		print_benchmark(bench);
-
-	// DONT FORGET TO FREE BOTH STACKS.
+		print_benchmark(&bench);
 	free_stack(&a);
 	free_stack(&b);
-    return (0);
+	return (0);
 }

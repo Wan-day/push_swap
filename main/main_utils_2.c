@@ -1,81 +1,77 @@
-int	is_number(char *str)
+#include "push_swap.h"
+
+/*
+Returns 1 and raises the bench flag if str is "--bench".
+Returns 0 if str is another string, or if the flag was already given
+(a repeated flag is then handled as an invalid number by the parser).
+*/
+static int	is_bench(char *str, t_options *opts)
 {
-	if (*str == '-')
-		str++;
-	while (*str)
-	{
-		if (ft_is_digit(*str))
-			str++;
-		else
-			return (0);
-	}
-	return (1)
+	if (opts->bench || ft_strncmp(str, "--bench", 8) != 0)
+		return (0);
+	opts->bench = 1;
+	return (1);
 }
 
-int	*parse_tokens(char **tokens, int remaining, int *count)
+/*
+Returns 1 and stores the strategy if str is --simple, --medium,
+--complex or --adaptive. Only one strategy flag is accepted: once
+strategy_set is raised, any other strategy flag returns 0.
+The length given to ft_strncmp includes the '\0', so the whole string
+has to match, not just its beginning.
+*/
+static int	is_strategy(char *str, t_options *opts)
 {
-	int		*result;
+	if (opts->strategy_set)
+		return (0);
+	if (ft_strncmp(str, "--simple", 9) == 0)
+		opts->strategy = SIMPLE;
+	else if (ft_strncmp(str, "--medium", 9) == 0)
+		opts->strategy = MEDIUM;
+	else if (ft_strncmp(str, "--complex", 10) == 0)
+		opts->strategy = COMPLEX;
+	else if (ft_strncmp(str, "--adaptive", 11) == 0)
+		opts->strategy = ADAPTIVE;
+	else
+		return (0);
+	opts->strategy_set = 1;
+	return (1);
+}
+
+/* Returns 1 if str is an accepted option (--bench or a strategy). */
+static int	is_option(char *str, t_options *opts)
+{
+	if (is_bench(str, opts))
+		return (1);
+	return (is_strategy(str, opts));
+}
+
+/*
+Splits argv into options and numbers.
+The options found are recorded in opts. Every other argument is copied,
+in order, into a NULL terminated array that is returned (the caller
+frees the array, not the strings, which still belong to argv).
+argv[0] is the program name and is skipped.
+*/
+char	**extract_options(int argc, char **argv, t_options *opts)
+{
+	char	**res;
 	int		i;
-	char	**split_tokens;
-	
-	split_tokens = ft_split(tokens, ' ');
-	if (split_tokens == NULL)
-		put_error();
-	*count = 0;
-	while (split_tokens[*count] != NULL)
-		(*count)++;
-	result = ft_calloc(*count + 1, sizeof(int));
-	if (result == NULL)
-		put_error();
-	i = 0;
-	while (i < *count)
-	{
-		if (is_number(tokens[i]))
-		{
-			result[i] = ft_atoi(tokens[i]);
-		}
-		else
-			put_error();
-	}
-	return (result);
-}
+	int		j;
 
-t_stack	*stack_new(int content)
-{
-	t_stack	*res;
-
-	res = ft_calloc(1, sizeof(t_stack));
+	res = ft_calloc(argc + 1, sizeof(char *));
 	if (res == NULL)
 		put_error();
-	res->num = content;
+	i = 1;
+	j = 0;
+	while (i < argc)
+	{
+		if (!is_option(argv[i], opts))
+		{
+			res[j] = argv[i];
+			j++;
+		}
+		i++;
+	}
 	return (res);
-}
-
-void	stack_add(int content, t_stack *stack)
-{
-	t_stack	*new;
-	t_stack	*temp;
-
-	new = stack_new(content);
-	temp = stack->prev;
-	temp->next = *new;
-	new->prev = *temp;
-	new->next = *stack;
-	stack->prev = *new;
-}
-
-t_stack	*build_stack(int *tokens, int count, t_bench *bench)
-{
-	t_stack	*result;
-	int		i;
-	double	disorder;
-
-	i = 0;
-	result = stack_new(tokens[i]);
-	i++;
-	while (i < count)
-		stack_add(tokens[i], result);
-	disorder = calculate_disorder(result, count);
-	bench->disorder = disorder;
-	return (result);
 }
