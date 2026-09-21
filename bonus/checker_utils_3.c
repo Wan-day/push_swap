@@ -1,32 +1,45 @@
 #include "bonus.h"
 
-int	is_operation(char *temp, t_stack *a, t_stack *b, int count)
+static int	op_test(char *temp, t_stack **a, t_stack **b)
 {
-	if (strncmp("pa\n", temp) == 0)
+	if (ft_strncmp(temp, "pa", 3) == 0)
 		pa(a, b);
-	else if (strncmp("pb\n", temp) == 0)
+	else if (ft_strncmp(temp, "pb", 3) == 0)
 		pb(a, b);
-	else if (strncmp("rra\n", temp) == 0)
+	else if (ft_strncmp(temp, "rra", 4) == 0)
 		rra(a);
-	else if (strncmp("rrb\n", temp) == 0)
+	else if (ft_strncmp(temp, "rrb", 4) == 0)
 		rrb(b);
-	else if (strncmp("rrr\n", temp) == 0)
+	else if (ft_strncmp(temp, "rrr", 4) == 0)
 		rrr(a, b);
-	else if (strncmp("ra\n", temp) == 0)
+	else if (ft_strncmp(temp, "ra", 3) == 0)
 		ra(a);
-	else if (strncmp("rb\n", temp) == 0)
+	else if (ft_strncmp(temp, "rb", 3) == 0)
 		rb(b);
-	else if (strncmp("rr\n", temp) == 0)
+	else if (ft_strncmp(temp, "rr", 3) == 0)
 		rr(a, b);
-	else if (strncmp("sa\n", temp) == 0)
+	else if (ft_strncmp(temp, "sa", 3) == 0)
 		sa(a);
-	else if (strncmp("sb\n", temp) == 0)
+	else if (ft_strncmp(temp, "sb", 3) == 0)
 		sb(b);
-	else if (strncmp("ss\n", temp) == 0)
+	else if (ft_strncmp(temp, "ss", 3) == 0)
 		ss(a, b);
 	else
 		return (0);
 	return (1);
+
+}
+
+int	is_operation(char *temp, t_stack **a, t_stack **b)
+{
+	size_t	len;
+	int		test;
+
+	len = ft_strlen(temp);
+	if (len > 0 && temp[len - 1] == '\n')
+		temp[len - 1] = '\0';
+	test = op_test(temp, a, b);
+	return (test);
 }
 
 int	is_sorted(t_stack *a, int size)

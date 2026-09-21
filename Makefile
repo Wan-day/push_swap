@@ -24,7 +24,7 @@ INCLUDES	= -I includes -I $(LIBFT_DIR) -I $(PRINTF_DIR)/includes
 OBJS		= $(SRCS:.c=.o)
 NAME		= push_swap
 
-BONUS	= checker
+BONUS		= checker
 BONUS_DIR	= bonus
 BONUS_SRCS	= $(BONUS_DIR)/checker_utils_2.c \
 			$(BONUS_DIR)/helper_utils_1.c \
@@ -38,7 +38,7 @@ BONUS_SRCS	= $(BONUS_DIR)/checker_utils_2.c \
 			$(BONUS_DIR)/rev_rot.c
 
 BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
-BONUS_INCLUDES	= -I $(LIBFT_DIR) -I $(PRINTF_DIR)/includes
+BONUS_INCLUDES	= -I $(BONUS_DIR) -I $(LIBFT_DIR) -I $(PRINTF_DIR)/includes
 
 NAME		= push_swap
 
@@ -60,13 +60,14 @@ $(PRINTF):
 $(SRCS_DIR)/%.o: $(SRCS_DIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(BONUS): $(LIBFT) $(PRINTF) $(BONUS_OBJS)
-	$(CC) $(BONUS_OBJS) $(LIBFT) $(PRINTF) -o $(BONUS)
+
+$(BONUS_DIR)/%.o: $(BONUS_DIR)/%.c
+	$(CC) $(CFLAGS) $(BONUS_INCLUDES) -c $< -o $@
 
 $(BONUS_OBJS): $(BONUS_DIR)/bonus.h
 
-$(BOUNS_DIR)/%.c: $(BONUS_DIR/%.c
-	$(CC) $(CFLAGS) $(BONUS_INCLUDES) -c $< -o $@
+$(BONUS): $(LIBFT) $(PRINTF) $(BONUS_OBJS)
+	$(CC) $(BONUS_OBJS) $(LIBFT) $(PRINTF) -o $(BONUS)
 
 clean:
 	$(RM) $(OBJS)

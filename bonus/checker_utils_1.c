@@ -72,17 +72,23 @@ t_stack	*load_stack(int argc, char **argv, int *count)
 	int		*nums;
 	t_stack	*head;
 
+	tokens = ft_calloc(argc + 1, sizeof(char *));
+	if (tokens == NULL)
+		put_error();
+	tokens[argc] = NULL;
+	while (--argc)
+		tokens[argc] = argv[argc];
 	nums = parse_tokens(tokens, count);
-	free(tokens);
+	free_split(tokens);
 	head = build_stack(nums, *count);
 	free(nums);
 	return (head);
 }
 
 
-void	do_operation(char *temp, t_stack *a, t_stack *b, int count)
+void	do_operation(char *temp, t_stack **a, t_stack **b)
 {
-	if (is_operation(temp, a, b, count))
+	if (is_operation(temp, a, b))
 		return ;
 	else
 		put_error();

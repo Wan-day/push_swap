@@ -3,6 +3,9 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
+# include "libft.h"
+# include "ft_printf.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 8
@@ -49,9 +52,9 @@ typedef struct s_str_view
 char	*get_next_line(int fd);
 t_stack	*load_stack(int argc, char **argv, int *count);
 t_stack	*build_stack(int *nums, int count);
-void	do_operation(char *temp, t_stack *a, t_stack *b, int count);
+void	do_operation(char *temp, t_stack **a, t_stack **b);
 int	*parse_tokens(char **tokens, int *count);
-int	is_operation(char *temp, t_stack *a, t_stack *b, int count);
+int	is_operation(char *temp, t_stack **a, t_stack **b);
 int	is_sorted(t_stack *a, int size);
 void	put_error(void);
 void	free_split(char **words);

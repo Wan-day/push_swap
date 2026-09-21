@@ -16,13 +16,13 @@ int	main(int argc, char **argv)
 	temp = get_next_line(0);
 	while (temp != NULL)
 	{
-		do_operation(temp, &a, &b, count);
+		do_operation(temp, &a, &b);
 		temp = get_next_line(0);
 	}
 	if (is_sorted(a, count))
-		ft_printf("OK\n");
+		ft_printf("\nOK\n");
 	else
-		ft_printf("KO\n");
+		ft_printf("\nKO\n");
 	free_stack(&a);
 	free_stack(&b);
 	return (0);
