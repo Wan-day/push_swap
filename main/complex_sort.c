@@ -20,12 +20,13 @@ static void assign_ranks(t_stack **a, int size)
 		temp = temp_main;
 		while (j < size)
 		{
-			if (temp_main->value > temp->value)
+			if (temp_main->num > temp->num)
 				temp_main->rank++;
 			temp = temp->next;
 			j++;
 		}
 		temp_main = temp_main->next;
+		i++;
 	}
 }
 

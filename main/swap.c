@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-void	sa(t_stack **a)
+void	sa(t_stack **a, t_bench *bench)
 {
 	t_stack	*node1;
 	t_stack	*node2;
@@ -25,9 +25,14 @@ void	sa(t_stack **a)
 	tmp = node1->num;
 	node1->num = node2->num;
 	node2->num = tmp;
+	if (bench)
+	{
+		ft_printf("sa\n");
+		bench->op_count[OP_SA]++;
+	}
 }
 
-void	sb(t_stack **b)
+void	sb(t_stack **b, t_bench *bench)
 {
 	t_stack	*node1;
 	t_stack	*node2;
@@ -40,10 +45,20 @@ void	sb(t_stack **b)
 	tmp = node1->num;
 	node1->num = node2->num;
 	node2->num = tmp;
+	if (bench)
+	{
+		ft_printf("sb\n");
+		bench->op_count[OP_SB]++;
+	}
 }
 
-void	ss(t_stack **a, t_stack **b)
+void	ss(t_stack **a, t_stack **b, t_bench *bench)
 {
-	sa(a);
-	sb(b);
+	sa(a, NULL);
+	sb(b, NULL);
+	if (bench)
+	{
+		ft_printf("ss\n");
+		bench->op_count[OP_SS]++;
+	}
 }

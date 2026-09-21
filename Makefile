@@ -14,7 +14,6 @@ SRCS		= $(SRCS_DIR)/bench_utils_1.c \
 			  $(SRCS_DIR)/rev_rot.c \
 			  $(SRCS_DIR)/helper_utils_1.c \
 			  $(SRCS_DIR)/main_utils_2.c \
-			  $(SRCS_DIR)/operations_1.c \
 			  $(SRCS_DIR)/rot.c
 
 LIBFT_DIR	= libft
@@ -25,10 +24,11 @@ INCLUDES	= -I includes -I $(LIBFT_DIR) -I $(PRINTF_DIR)/includes
 
 TARGET		= push_swap
 
-OBJS: includes/push_swap.h
-	$(SRCS:.c=.o)
+OBJS		= $(SRCS:.c=.o)
 
 all:	$(TARGET)
+
+$(OBJS): includes/push_swap.h
 
 $(TARGET): $(LIBFT) $(PRINTF) $(OBJS)
 	$(CC) $(OBJS) $(LIBFT) $(PRINTF) -o $(TARGET)
@@ -54,4 +54,6 @@ fclean:	clean
 
 re:	fclean all
 
-.PHONY: all clean fclean re
+FORCE:
+
+.PHONY: all clean fclean re FORCE

@@ -104,4 +104,28 @@ void	put_error(void);
 void	free_split(char **words);
 void	free_stack(t_stack **stack);
 
+/* sorting functions */
+void	simple_sort(t_stack **a, t_stack **b, t_bench *bench, int size);
+void	medium_sort(t_stack **a, t_stack **b, t_bench *bench, int size);
+void	complex_sort(t_stack **a, t_stack **b, t_bench *bench, int size);
+
+/* swap operations */
+void	sa(t_stack **a, t_bench *bench);
+void	sb(t_stack **b, t_bench *bench);
+void	ss(t_stack **a, t_stack **b, t_bench *bench);
+
+/* rotation operations */
+void	ra(t_stack **a, t_bench *bench);
+void	rb(t_stack **b, t_bench *bench);
+void	rr(t_stack **a, t_stack **b, t_bench *bench);
+
+/* reverse rotation operations */
+void	rra(t_stack **a, t_bench *bench);
+void	rrb(t_stack **b, t_bench *bench);
+void	rrr(t_stack **a, t_stack **b, t_bench *bench);
+
+/* push operations */
+void	pa(t_stack **a, t_stack **b, t_bench *bench);
+void	pb(t_stack **a, t_stack **b, t_bench *bench);
+
 #endif

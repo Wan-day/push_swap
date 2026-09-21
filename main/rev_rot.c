@@ -10,24 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-void	rra(t_stack **a)
+void	rra(t_stack **a, t_bench *bench)
 {
 	if ((*a) == NULL || (*a)->next == (*a))
 		return ;
 	(*a) = (*a)->prev;
+	if (bench)
+	{
+		ft_printf("rra\n");
+		bench->op_count[OP_RRA]++;
+	}
 }
 
-void	rrb(t_stack **b)
+void	rrb(t_stack **b, t_bench *bench)
 {
 	if ((*b) == NULL || (*b)->next == (*b))
 		return ;
 	(*b) = (*b)->prev;
+	if (bench)
+	{
+		ft_printf("rrb\n");
+		bench->op_count[OP_RRB]++;
+	}
 }
 
-void	rrr(t_stack **a, t_stack **b)
+void	rrr(t_stack **a, t_stack **b, t_bench *bench)
 {
-	rra(a);
-	rrb(b);
+	rra(a, NULL);
+	rrb(b, NULL);
+	if (bench)
+	{
+		ft_printf("rrr\n");
+		bench->op_count[OP_RRR]++;
+	}
 }
