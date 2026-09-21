@@ -48,6 +48,7 @@ stack, head->prev is the bottom and bottom->next is the head again.
 typedef struct s_stack
 {
 	int				num;
+	int				rank;
 	struct s_stack	*next;
 	struct s_stack	*prev;
 }	t_stack;
