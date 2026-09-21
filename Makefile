@@ -21,17 +21,35 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 PRINTF_DIR	= ft_printf
 PRINTF		= $(PRINTF_DIR)/libftprintf.a
 INCLUDES	= -I includes -I $(LIBFT_DIR) -I $(PRINTF_DIR)/includes
+OBJS		= $(SRCS:.c=.o)
+NAME		= push_swap
 
-TARGET		= push_swap
+BONUS	= checker
+BONUS_DIR	= bonus
+BONUS_SRCS	= $(BONUS_DIR)/checker_utils_2.c \
+			$(BONUS_DIR)/helper_utils_1.c \
+			$(BONUS_DIR)/rot.c \
+			$(BONUS_DIR)/checker.c \
+			$(BONUS_DIR)/checker_utils_3.c \
+			$(BONUS_DIR)/push.c \
+			$(BONUS_DIR)/swap.c \
+			$(BONUS_DIR)/checker_utils_1.c \
+			$(BONUS_DIR)/get_next_line.c \
+			$(BONUS_DIR)/rev_rot.c
+
+BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
+BONUS_INCLUDES	= -I $(LIBFT_DIR) -I $(PRINTF_DIR)/includes
+
+NAME		= push_swap
 
 OBJS		= $(SRCS:.c=.o)
 
-all:	$(TARGET)
+all:	$(NAME)
 
 $(OBJS): includes/push_swap.h
 
-$(TARGET): $(LIBFT) $(PRINTF) $(OBJS)
-	$(CC) $(OBJS) $(LIBFT) $(PRINTF) -o $(TARGET)
+$(NAME): $(LIBFT) $(PRINTF) $(OBJS)
+	$(CC) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME)
 
 $(LIBFT):
 	make -C libft
@@ -42,16 +60,38 @@ $(PRINTF):
 $(SRCS_DIR)/%.o: $(SRCS_DIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+$(BONUS): $(LIBFT) $(PRINTF) $(BONUS_OBJS)
+	$(CC) $(BONUS_OBJS) $(LIBFT) $(PRINTF) -o $(BONUS)
+
+$(BONUS_OBJS): $(BONUS_DIR)/bonus.h
+
+$(BOUNS_DIR)/%.c: $(BONUS_DIR/%.c
+	$(CC) $(CFLAGS) $(BONUS_INCLUDES) -c $< -o $@
+
 clean:
 	$(RM) $(OBJS)
 	make -C libft clean
 	make -C ft_printf clean
 
 fclean:	clean
-	$(RM) $(TARGET)
+	$(RM) $(NAME)
 	make -C $(LIBFT_DIR) fclean
 	make -C $(PRINTF_DIR) fclean
 
 re:	fclean all
 
-.PHONY: all clean fclean re
+bonus: $(BONUS)
+
+b_clean:
+	$(RM) $(BONUS_OBJS)
+	make -C libft clean
+	make -C ft_printf clean
+
+b_fclean: b_clean
+	$(RM) $(BONUS)
+	make -C $(LIBFT_DIR) fclean
+	make -C $(PRINTF_DIR) fclean
+
+b_re: b_fclean bonus
+
+.PHONY: all clean fclean re bonus b_clean b_fclean b_re
