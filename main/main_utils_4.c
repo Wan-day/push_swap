@@ -75,6 +75,36 @@ int	is_sorted(t_stack *a, int size)
 }
 
 /*
+Assigns a zero-based rank to every node. The rank represents how many 
+values in teh stack are smaller than this value.
+*/
+void	assign_ranks(t_stack **a, int size)
+{
+	int		i;
+	int		j;
+	t_stack	*temp_main;
+	t_stack	*temp;
+
+	i = 0;
+	temp_main = *a;
+	while (i < size)
+	{
+		j = 0;
+		temp_main->rank = 0;
+		temp = temp_main;
+		while (j < size)
+		{
+			if (temp_main->num > temp->num)
+				temp_main->rank++;
+			temp = temp->next;
+			j++;
+		}
+		temp_main = temp_main->next;
+		i++;
+	}
+}
+
+/*
 Looks at the strategy selected by the user and calls the selected algorithm.
 If --adaptive flag was chose then it selects the algorithm based on the
 disorder of the stack.
@@ -95,9 +125,9 @@ void	sort_stack(t_stack **a, t_stack **b, t_bench *bench, int size)
 	{
 		if (bench->disorder < 0.2)
 			simple_sort(a, b, bench, size);
-		else if(bench->disorder >= 0.2 && bench->disorder < 0.5)
+		else if (bench->disorder >= 0.2 && bench->disorder < 0.5)
 			medium_sort(a, b, bench, size);
-		else 
+		else
 			complex_sort(a, b, bench, size);
 	}
 }

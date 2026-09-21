@@ -33,10 +33,10 @@ $(OBJS): includes/push_swap.h
 $(TARGET): $(LIBFT) $(PRINTF) $(OBJS)
 	$(CC) $(OBJS) $(LIBFT) $(PRINTF) -o $(TARGET)
 
-$(LIBFT): FORCE
+$(LIBFT):
 	make -C libft
 
-$(PRINTF): FORCE
+$(PRINTF):
 	make -C ft_printf
 
 $(SRCS_DIR)/%.o: $(SRCS_DIR)/%.c
@@ -54,6 +54,4 @@ fclean:	clean
 
 re:	fclean all
 
-FORCE:
-
-.PHONY: all clean fclean re FORCE
+.PHONY: all clean fclean re

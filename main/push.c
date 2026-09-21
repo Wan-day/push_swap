@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-t_stack	*rmv_top(t_stack **s1)
+static t_stack	*rmv_top(t_stack **s1)
 {
 	t_stack	*x;
 	t_stack	*y;
@@ -34,7 +34,7 @@ t_stack	*rmv_top(t_stack **s1)
 	return (tmp);
 }
 
-void	ins_top(t_stack *node, t_stack **s2)
+static void	ins_top(t_stack *node, t_stack **s2)
 {
 	t_stack	*prev_node;
 

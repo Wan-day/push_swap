@@ -94,6 +94,7 @@ int		*parse_tokens(char **tokens, int *count);
 /* main_utils_4.c: disorder computation, sorted check and sorting */
 double	calculate_disorder(t_stack *a, int size);
 int		is_sorted(t_stack *a, int size);
+void	assign_ranks(t_stack **a, int size);
 void	sort_stack(t_stack **a, t_stack **b, t_bench *bench, int size);
 
 /* bench_utils_1.c: --bench output */
