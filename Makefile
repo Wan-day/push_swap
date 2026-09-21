@@ -1,9 +1,9 @@
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra
-INCLUDES	= -I includes -I $(LIBFT_DIR) -I $(PRINTF_DIR)
+INCLUDES	= -I includes -I $(LIBFT_DIR) -I $(PRINTF_DIR)/includes
 RM			= rm -f
 
-SRCS_DIR		= main
+SRCS_DIR	= main
 SRCS		= $(SRCS_DIR)/bench_utils_1.c \
 			  $(SRCS_DIR)/main.c \
 			  $(SRCS_DIR)/main_utils_3.c \
@@ -17,11 +17,12 @@ SRCS		= $(SRCS_DIR)/bench_utils_1.c \
 			  $(SRCS_DIR)/main_utils_2.c \
 			  $(SRCS_DIR)/operations_1.c \
 			  $(SRCS_DIR)/rot.c
+
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
-PRINTF_DIR	= ft_printf/includes
+PRINTF_DIR	= ft_printf
 PRINTF		= $(PRINTF_DIR)/ft_printf.a
-LIBS		= $(PRINTF) $(LIBFT)
+
 TARGET		= push_swap
 
 OBJS 		= $(SRCS:.c=.o)
