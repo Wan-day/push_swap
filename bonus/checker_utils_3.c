@@ -27,7 +27,6 @@ static int	op_test(char *temp, t_stack **a, t_stack **b)
 	else
 		return (0);
 	return (1);
-
 }
 
 int	is_operation(char *temp, t_stack **a, t_stack **b)

@@ -2,7 +2,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_stack *a;
+	t_stack	*a;
 	t_stack	*b;
 	int		count;
 	char	*temp;

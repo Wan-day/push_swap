@@ -85,7 +85,6 @@ t_stack	*load_stack(int argc, char **argv, int *count)
 	return (head);
 }
 
-
 void	do_operation(char *temp, t_stack **a, t_stack **b)
 {
 	if (is_operation(temp, a, b))

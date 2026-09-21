@@ -48,7 +48,7 @@ static char	*ft_strndup(char *s, ssize_t size)
 	return (result);
 }
 
-static char	*ft_strnjoin(char *s1, char *s2, size_t size_of_s1, size_t size_of_s2)
+char	*ft_strnjoin(char *s1, char *s2, size_t size_of_s1, size_t size_of_s2)
 {
 	char	*result;
 	size_t	i;
