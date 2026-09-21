@@ -1,6 +1,5 @@
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra
-INCLUDES	= -I includes -I $(LIBFT_DIR) -I $(PRINTF_DIR)/includes
 RM			= rm -f
 
 SRCS_DIR	= main
@@ -10,7 +9,7 @@ SRCS		= $(SRCS_DIR)/bench_utils_1.c \
 			  $(SRCS_DIR)/push.c \
 			  $(SRCS_DIR)/swap.c \
 			  $(SRCS_DIR)/complex_sort.c \
-			  $(SRCS_DIR)/main_utils_1.c \ 
+			  $(SRCS_DIR)/main_utils_1.c \
 			  $(SRCS_DIR)/main_utils_4.c \
 			  $(SRCS_DIR)/rev_rot.c \
 			  $(SRCS_DIR)/helper_utils_1.c \
@@ -21,24 +20,26 @@ SRCS		= $(SRCS_DIR)/bench_utils_1.c \
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 PRINTF_DIR	= ft_printf
-PRINTF		= $(PRINTF_DIR)/ft_printf.a
+PRINTF		= $(PRINTF_DIR)/libftprintf.a
+INCLUDES	= -I includes -I $(LIBFT_DIR) -I $(PRINTF_DIR)/includes
 
 TARGET		= push_swap
 
-OBJS 		= $(SRCS:.c=.o)
+OBJS: includes/push_swap.h
+	$(SRCS:.c=.o)
 
 all:	$(TARGET)
 
 $(TARGET): $(LIBFT) $(PRINTF) $(OBJS)
 	$(CC) $(OBJS) $(LIBFT) $(PRINTF) -o $(TARGET)
 
-$(LIBFT):
+$(LIBFT): FORCE
 	make -C libft
 
-$(PRINTF):
+$(PRINTF): FORCE
 	make -C ft_printf
 
-$(SRC_DIR)/%.o: $(SRCS_DIR)/%.c
+$(SRCS_DIR)/%.o: $(SRCS_DIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
@@ -47,12 +48,10 @@ clean:
 	make -C ft_printf clean
 
 fclean:	clean
-	$(RM) $(TARGET)    
-	make -C libft fclean
-	make -C ft_printf fclean
-
+	$(RM) $(TARGET)
+	make -C $(LIBFT_DIR) fclean
+	make -C $(PRINTF_DIR) fclean
 
 re:	fclean all
 
 .PHONY: all clean fclean re
-
