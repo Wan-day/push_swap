@@ -6,7 +6,7 @@
 /*   By: duk <duk@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 00:29:34 by duk               #+#    #+#             */
-/*   Updated: 2026/09/22 12:05:47 by duk              ###   ########.fr       */
+/*   Updated: 2026/09/22 17:53:44 by duk              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ forward which ever is closer will be used.
 */
 static void	put_top(t_stack **a, int len, int pos_min, t_bench *bench)
 {
-	int	count;
+	t_stack	*node;
+	int		pos_min;
+	int		pos;
+	int		min;
 
 	count = 0;
 	if (pos_min < len - pos_min)
@@ -33,12 +36,15 @@ static void	put_top(t_stack **a, int len, int pos_min, t_bench *bench)
 	}
 	else
 	{
-		while (count < len - pos_min)
+		node = node->next;
+		pos++;
+		if (node->num < min)
 		{
 			rra(a, bench);
 			count++;
 		}
 	}
+	return (pos_min);
 }
 
 /*
@@ -66,21 +72,16 @@ value and returns the position as pos_min.
 */
 static int	scan_min(int *tmp_array, int len)
 {
-	int	min;
-	int	i;
-	int	pos_min;
+	int	count;
 
-	i = 1;
-	min = tmp_array[0];
-	pos_min = 0;
-	while (len > i)
+	count = 0;
+	if (pos_min <= len - pos_min)
 	{
-		if (tmp_array[i] < min)
+		while (count < pos_min)
 		{
-			min = tmp_array[i];
-			pos_min = i;
+			ra(a, bench);
+			count++;
 		}
-		i++;
 	}
 	return (pos_min);
 }
@@ -97,11 +98,12 @@ static int	shift_elem(int *tmp_array, int len, int pos_min)
 	i = 0;
 	while (len - 1 - pos_min > i)
 	{
-		tmp_array[pos_min + i] = tmp_array[pos_min + i + 1];
-		i++;
+		while (count < len - pos_min)
+		{
+			rra(a, bench);
+			count++;
+		}
 	}
-	len = len - 1;
-	return (len);
 }
 
 /*
@@ -115,25 +117,14 @@ and pushes the elements to stack a.
 void	simple_sort(t_stack **a, t_stack **b, t_bench *bench, int size)
 {
 	int	pos_min;
-	int	len;
-	int	*tmp_array;
 
-	len = size;
-	tmp_array = ft_calloc (len, sizeof(int));
-	if (tmp_array == NULL)
-	{
-		free_stack(a);
-		put_error();
-	}
-	cpy_list(a, tmp_array);
-	while (len > 0)
+	while (size > 0)
 	{
 		pos_min = scan_min(tmp_array, len);
 		put_top(a, len, pos_min, bench);
 		pb(a, b, bench);
 		len = shift_elem(tmp_array, len, pos_min);
 	}
-	free(tmp_array);
 	while ((*b) != NULL)
 	{
 		pa(a, b, bench);
