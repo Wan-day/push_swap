@@ -1,4 +1,17 @@
 #include "push_swap.h"
+
+/*
+Compare the current value of i-th bit of the value a to 1 and either move it 
+to the stack b or go to the next value in the stack a.
+*/
+static void	radix_check(t_stack **a, t_stack **b, t_bench *bench, int i)
+{
+	if (((*a)->rank >> i) & 1)
+		ra(a, bench);
+	else
+		pb(a, b, bench);
+}
+
 /*
 Sort the stack a using the LSD binary radix sort.
 

@@ -134,7 +134,10 @@ int	*parse_tokens(char **tokens, int *count)
 	*count = count_numbers(tokens);
 	nums = ft_calloc(*count, sizeof(int));
 	if (nums == NULL)
+	{
+		free_split(tokens);
 		put_error();
+	}
 	i = 0;
 	idx = 0;
 	while (tokens[i])
@@ -145,6 +148,7 @@ int	*parse_tokens(char **tokens, int *count)
 	if (has_duplicates(nums, *count))
 	{
 		free(nums);
+		free_split(tokens);
 		put_error();
 	}
 	return (nums);

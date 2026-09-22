@@ -73,5 +73,6 @@ char	**extract_options(int argc, char **argv, t_options *opts)
 		}
 		i++;
 	}
+	res[j] = NULL;
 	return (res);
 }

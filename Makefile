@@ -14,7 +14,9 @@ SRCS		= $(SRCS_DIR)/bench_utils_1.c \
 			  $(SRCS_DIR)/rev_rot.c \
 			  $(SRCS_DIR)/helper_utils_1.c \
 			  $(SRCS_DIR)/main_utils_2.c \
-			  $(SRCS_DIR)/rot.c
+			  $(SRCS_DIR)/rot.c \
+			  $(SRCS_DIR)/simple_sort.c \
+			  $(SRCS_DIR)/medium_sort.c
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
