@@ -6,12 +6,12 @@
 /*   By: duk <duk@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 00:29:34 by duk               #+#    #+#             */
-/*   Updated: 2026/09/22 12:05:47 by duk              ###   ########.fr       */
+/*   Updated: 2026/09/22 14:15:18 by duk              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+```
 void	put_top(t_stack **a, int len, int pos_min)
 {
 	int	count;
@@ -144,3 +144,4 @@ stack a and pushed to the head of stack b until all the elements
 are sorted in b, which then frees the array
 and pushes the elements to stack a.
 */
+```
