@@ -15,22 +15,22 @@ int	main(int argc, char **argv)
 	t_bench		bench;
 	t_stack		*a;
 	t_stack		*b;
-	int			count;
+	int			size;
 
 	if (argc < 2)
 		return (0);
 	ft_bzero(&opts, sizeof(opts));
 	ft_bzero(&bench, sizeof(bench));
 	opts.strategy = ADAPTIVE;
-	a = load_stack(argc, argv, &opts, &count);
+	a = load_stack(argc, argv, &opts, &size);
 	if (a == NULL)
 		return (0);
 	b = NULL;
 	bench.strategy = opts.strategy;
-	bench.disorder = calculate_disorder(a, count);
-	assign_ranks(&a, count);
-	if (!is_sorted(a, count))
-		sort_stack(&a, &b, &bench, count);
+	bench.disorder = calculate_disorder(a, size);
+	assign_ranks(&a, size);
+	if (!is_sorted(a, size))
+		sort_stack(&a, &b, &bench, size);
 	if (opts.bench)
 		print_benchmark(&bench);
 	free_stack(&a);
