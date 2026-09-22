@@ -88,7 +88,7 @@ t_stack	*load_stack(int argc, char **argv, t_options *opts, int *count)
 		return (NULL);
 	}
 	nums = parse_tokens(tokens, count);
-	free_split(tokens);
+	free(tokens);
 	head = build_stack(nums, *count);
 	free(nums);
 	return (head);

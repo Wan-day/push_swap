@@ -14,5 +14,9 @@
 
 void	medium_sort(t_stack **a, t_stack **b, t_bench *bench, int size)
 {
+	(void)a;
+	(void)b;
+	(void)bench;
+	(void)size;
 	return ;
 }
