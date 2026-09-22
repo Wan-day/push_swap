@@ -1,9 +1,5 @@
-#include "push_swap.h"
+#include "bonus.h"
 
-/*
-Allocates a node alone in its own circular list (it points to itself).
-Returns NULL if the allocation fails.
-*/
 static t_stack	*stack_new(int content)
 {
 	t_stack	*res;
@@ -70,26 +66,29 @@ t_stack	*build_stack(int *nums, int count)
 	return (head);
 }
 
-/*
-Reads argv completely: options, numbers, validation, and builds stack a.
-*count receives the number of elements. Returns NULL (with nothing to
-free) if argv holds no number. Temporary arrays are freed here.
-*/
-t_stack	*load_stack(int argc, char **argv, t_options *opts, int *count)
+t_stack	*load_stack(int argc, char **argv, int *count)
 {
 	char	**tokens;
 	int		*nums;
 	t_stack	*head;
 
-	tokens = extract_options(argc, argv, opts);
-	if (tokens[0] == NULL)
-	{
-		free(tokens);
-		return (NULL);
-	}
+	tokens = ft_calloc(argc + 1, sizeof(char *));
+	if (tokens == NULL)
+		put_error();
+	tokens[argc] = NULL;
+	while (--argc)
+		tokens[argc] = argv[argc];
 	nums = parse_tokens(tokens, count);
 	free_split(tokens);
 	head = build_stack(nums, *count);
 	free(nums);
 	return (head);
+}
+
+void	do_operation(char *temp, t_stack **a, t_stack **b)
+{
+	if (is_operation(temp, a, b))
+		return ;
+	else
+		put_error();
 }

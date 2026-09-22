@@ -10,39 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "bonus.h"
 
-void	rra(t_stack **a, t_bench *bench)
+void	rra(t_stack **a)
 {
 	if ((*a) == NULL || (*a)->next == (*a))
 		return ;
 	(*a) = (*a)->prev;
-	if (bench)
-	{
-		ft_printf("rra\n");
-		bench->op_count[OP_RRA]++;
-	}
 }
 
-void	rrb(t_stack **b, t_bench *bench)
+void	rrb(t_stack **b)
 {
 	if ((*b) == NULL || (*b)->next == (*b))
 		return ;
 	(*b) = (*b)->prev;
-	if (bench)
-	{
-		ft_printf("rrb\n");
-		bench->op_count[OP_RRB]++;
-	}
 }
 
-void	rrr(t_stack **a, t_stack **b, t_bench *bench)
+void	rrr(t_stack **a, t_stack **b)
 {
-	rra(a, NULL);
-	rrb(b, NULL);
-	if (bench)
-	{
-		ft_printf("rrr\n");
-		bench->op_count[OP_RRR]++;
-	}
+	rra(a);
+	rrb(b);
 }

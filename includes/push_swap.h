@@ -94,6 +94,7 @@ int		*parse_tokens(char **tokens, int *count);
 /* main_utils_4.c: disorder computation, sorted check and sorting */
 double	calculate_disorder(t_stack *a, int size);
 int		is_sorted(t_stack *a, int size);
+void	assign_ranks(t_stack **a, int size);
 void	sort_stack(t_stack **a, t_stack **b, t_bench *bench, int size);
 
 /* bench_utils_1.c: --bench output */
@@ -103,5 +104,29 @@ void	print_benchmark(t_bench *bench);
 void	put_error(void);
 void	free_split(char **words);
 void	free_stack(t_stack **stack);
+
+/* sorting functions */
+void	simple_sort(t_stack **a, t_stack **b, t_bench *bench, int size);
+void	medium_sort(t_stack **a, t_stack **b, t_bench *bench, int size);
+void	complex_sort(t_stack **a, t_stack **b, t_bench *bench, int size);
+
+/* swap operations */
+void	sa(t_stack **a, t_bench *bench);
+void	sb(t_stack **b, t_bench *bench);
+void	ss(t_stack **a, t_stack **b, t_bench *bench);
+
+/* rotation operations */
+void	ra(t_stack **a, t_bench *bench);
+void	rb(t_stack **b, t_bench *bench);
+void	rr(t_stack **a, t_stack **b, t_bench *bench);
+
+/* reverse rotation operations */
+void	rra(t_stack **a, t_bench *bench);
+void	rrb(t_stack **b, t_bench *bench);
+void	rrr(t_stack **a, t_stack **b, t_bench *bench);
+
+/* push operations */
+void	pa(t_stack **a, t_stack **b, t_bench *bench);
+void	pb(t_stack **a, t_stack **b, t_bench *bench);
 
 #endif

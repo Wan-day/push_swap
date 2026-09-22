@@ -1,48 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rev_rot.c                                          :+:      :+:    :+:   */
+/*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: duk <duk@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/15 13:36:25 by duk               #+#    #+#             */
-/*   Updated: 2026/09/15 13:36:51 by duk              ###   ########.fr       */
+/*   Created: 2026/09/15 13:33:16 by duk               #+#    #+#             */
+/*   Updated: 2026/09/15 13:36:15 by duk              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "bonus.h"
 
-void	rra(t_stack **a, t_bench *bench)
+void	sa(t_stack **a)
 {
+	t_stack	*node1;
+	t_stack	*node2;
+	int		tmp;
+
 	if ((*a) == NULL || (*a)->next == (*a))
 		return ;
-	(*a) = (*a)->prev;
-	if (bench)
-	{
-		ft_printf("rra\n");
-		bench->op_count[OP_RRA]++;
-	}
+	node1 = *a;
+	node2 = (*a)->next;
+	tmp = node1->num;
+	node1->num = node2->num;
+	node2->num = tmp;
 }
 
-void	rrb(t_stack **b, t_bench *bench)
+void	sb(t_stack **b)
 {
+	t_stack	*node1;
+	t_stack	*node2;
+	int		tmp;
+
 	if ((*b) == NULL || (*b)->next == (*b))
 		return ;
-	(*b) = (*b)->prev;
-	if (bench)
-	{
-		ft_printf("rrb\n");
-		bench->op_count[OP_RRB]++;
-	}
+	node1 = *b;
+	node2 = (*b)->next;
+	tmp = node1->num;
+	node1->num = node2->num;
+	node2->num = tmp;
 }
 
-void	rrr(t_stack **a, t_stack **b, t_bench *bench)
+void	ss(t_stack **a, t_stack **b)
 {
-	rra(a, NULL);
-	rrb(b, NULL);
-	if (bench)
-	{
-		ft_printf("rrr\n");
-		bench->op_count[OP_RRR]++;
-	}
+	sa(a);
+	sb(b);
 }

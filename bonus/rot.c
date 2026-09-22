@@ -1,48 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rev_rot.c                                          :+:      :+:    :+:   */
+/*   rot.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: duk <duk@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/15 13:36:25 by duk               #+#    #+#             */
-/*   Updated: 2026/09/15 13:36:51 by duk              ###   ########.fr       */
+/*   Created: 2026/09/15 13:35:15 by duk               #+#    #+#             */
+/*   Updated: 2026/09/15 13:36:02 by duk              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "bonus.h"
 
-void	rra(t_stack **a, t_bench *bench)
+void	ra(t_stack **a)
 {
 	if ((*a) == NULL || (*a)->next == (*a))
 		return ;
-	(*a) = (*a)->prev;
-	if (bench)
-	{
-		ft_printf("rra\n");
-		bench->op_count[OP_RRA]++;
-	}
+	(*a) = (*a)->next;
 }
 
-void	rrb(t_stack **b, t_bench *bench)
+void	rb(t_stack **b)
 {
 	if ((*b) == NULL || (*b)->next == (*b))
 		return ;
-	(*b) = (*b)->prev;
-	if (bench)
-	{
-		ft_printf("rrb\n");
-		bench->op_count[OP_RRB]++;
-	}
+	(*b) = (*b)->next;
 }
 
-void	rrr(t_stack **a, t_stack **b, t_bench *bench)
+void	rr(t_stack **a, t_stack **b)
 {
-	rra(a, NULL);
-	rrb(b, NULL);
-	if (bench)
-	{
-		ft_printf("rrr\n");
-		bench->op_count[OP_RRR]++;
-	}
+	ra(a);
+	rb(b);
 }

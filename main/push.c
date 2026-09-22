@@ -34,7 +34,7 @@ t_stack	*rmv_top(t_stack **s1)
 	return (tmp);
 }
 
-void	ins_top(t_stack *node, t_stack **s2)
+static void	ins_top(t_stack *node, t_stack **s2)
 {
 	t_stack	*prev_node;
 
@@ -55,7 +55,7 @@ void	ins_top(t_stack *node, t_stack **s2)
 	}
 }
 
-void	pa(t_stack **a, t_stack **b)
+void	pa(t_stack **a, t_stack **b, t_bench *bench)
 {
 	t_stack	*tmp;
 
@@ -63,9 +63,14 @@ void	pa(t_stack **a, t_stack **b)
 	if (tmp == NULL)
 		return ;
 	ins_top (tmp, a);
+	if (bench)
+	{
+		ft_printf("pa\n");
+		bench->op_count[OP_PA]++;
+	}
 }
 
-void	pb(t_stack **a, t_stack **b)
+void	pb(t_stack **a, t_stack **b, t_bench *bench)
 {
 	t_stack	*tmp;
 
@@ -73,5 +78,10 @@ void	pb(t_stack **a, t_stack **b)
 	if (tmp == NULL)
 		return ;
 	ins_top (tmp, b);
+	if (bench)
+	{
+		ft_printf("pb\n");
+		bench->op_count[OP_PB]++;
+	}
 }
 ```
