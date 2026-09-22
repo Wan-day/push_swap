@@ -6,33 +6,40 @@
 /*   By: duk <duk@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 00:29:34 by duk               #+#    #+#             */
-/*   Updated: 2026/09/22 14:15:18 by duk              ###   ########.fr       */
+/*   Updated: 2026/09/22 17:45:46 by duk              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-```
-void	put_top(t_stack **a, int len, int pos_min)
-{
-	int	count;
 
-	count = 0;
-	if (pos_min < len - pos_min)
+/*
+the scan_min function runs through the stack a
+and finding the min value containing nodes and
+returning their position as int
+*/
+
+int	scan_min(t_stack **a)
+{
+	t_stack	*node;
+	int		pos_min;
+	int		pos;
+	int		min;
+
+	node = (*a);
+	min = (*a)->num;
+	pos_min = 0;
+	pos = 0;
+	while (node->next != (*a))
 	{
-		while (count < pos_min)
+		node = node->next;
+		pos++;
+		if (node->num < min)
 		{
-			ra(a);
-			count++;
+			min = node->num;
+			pos_min = pos;
 		}
 	}
-	else
-	{
-		while (count < len - pos_min)
-		{
-			rra(a);
-			count++;
-		}
-	}
+	return (pos_min);
 }
 
 /*
@@ -42,106 +49,48 @@ as the circular linked list has no NULL thus rotating backward or
 forward which ever is closer will be used.
 */
 
-void	cpy_list(t_stack **a, int *tmp_array)
+void	put_top(t_stack **a, t_bench *bench, int len, int pos_min)
 {
-	int		i;
-	t_stack	*node;
+	int	count;
 
-	node = *a;
-	i = 1;
-	tmp_array[0] = (*a)->num;
-	while (node->next != *a)
+	count = 0;
+	if (pos_min <= len - pos_min)
 	{
-		node = node->next;
-		tmp_array[i] = node->num;
-		i++;
-	}
-}
-
-/*
-copies the stack a numbers into the temporary array. 
-*/
-
-int	scan_min(int *tmp_array, int len)
-{
-	int	min;
-	int	i;
-	int	pos_min;
-
-	i = 1;
-	min = tmp_array[0];
-	pos_min = 0;
-	while (len > i)
-	{
-		if (tmp_array[i] < min)
+		while (count < pos_min)
 		{
-			min = tmp_array[i];
-			pos_min = i;
+			ra(a, bench);
+			count++;
 		}
-		i++;
 	}
-	return (pos_min);
-}
-
-/*
-scans the array to find the position of the minimum
-value and returns the position as pos_min.
-*/
-
-int	shift_elem(int *tmp_array, int len, int pos_min)
-{
-	int	i;
-
-	i = 0;
-	while (len - 1 - pos_min > i)
+	else
 	{
-		tmp_array[pos_min + i] = tmp_array[pos_min + i + 1];
-		i++;
+		while (count < len - pos_min)
+		{
+			rra(a, bench);
+			count++;
+		}
 	}
-	len = len - 1;
-	return (len);
 }
 
 /*
-cleans the array after where min value is
-removed and the numbers on the right moves to the right
-side of the array, and readjusts the lenght of the array.
+the sorting function works by scaning the stack a to
+find the min value, and afterwards rotates it to the
+head of stack a and pushes is to stack b, 
 */
 
-void	simple_sort(t_stack **a, t_stack **b, t_stack *bench, int size)
+void	simple_sort(t_stack **a, t_stack **b, t_bench *bench, int size)
 {
 	int	pos_min;
-	int	len;
-	int	*tmp_array;
 
-	len = size;
-	tmp_array = ft_calloc (len, sizeof(int));
-	if (tmp_array == NULL)
+	while (size > 0)
 	{
-		free_stack(a);
-		put_error();
+		pos_min = scan_min(a);
+		put_top(a, bench, size, pos_min);
+		pb(a, b, bench);
+		size--;
 	}
-	cpy_list(a, tmp_array);
-	while (len > 0)
-	{
-		pos_min = scan_min(tmp_array, len);
-		put_top(a, len, pos_min);
-		pb(a, b);
-		len = shift_elem(tmp_array, len, pos_min);
-	}
-	free(tmp_array);
 	while ((*b) != NULL)
 	{
-		pa(a, b);
+		pa(a, b, bench);
 	}
 }
-
-/*
-allocates memory to the array and copies the num
-from stack a to the array and until the each elemet in
-the array is scanned and gets that min value to the top of
-stack a and pushed to the head of stack b until all the elements
-are sorted in b, which then frees the array
-and pushes the elements to stack a.
-*/
-```
