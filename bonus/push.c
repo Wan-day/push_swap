@@ -27,10 +27,10 @@ static t_stack	*rmv_top(t_stack **s1)
 	y = (*s1)->next;
 	x->next = y;
 	y->prev = x;
-	if (check == 1)
-		*s1 = NULL;
-	else
+	if (check == 0)
 		*s1 = y;
+	else
+		*s1 = NULL;
 	return (tmp);
 }
 
