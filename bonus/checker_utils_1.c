@@ -71,15 +71,20 @@ t_stack	*load_stack(int argc, char **argv, int *count)
 	char	**tokens;
 	int		*nums;
 	t_stack	*head;
+	int		i;
 
-	tokens = ft_calloc(argc + 1, sizeof(char *));
+	tokens = ft_calloc(argc, sizeof(char *));
 	if (tokens == NULL)
 		put_error();
-	tokens[argc] = NULL;
-	while (--argc)
-		tokens[argc] = argv[argc];
+	tokens[argc - 1] = NULL;
+	i = 0;
+	while (i < argc - 1)
+	{
+		tokens[i] = argv[i + 1];
+		i++;
+	}
 	nums = parse_tokens(tokens, count);
-	free_split(tokens);
+	free(tokens);
 	head = build_stack(nums, *count);
 	free(nums);
 	return (head);
