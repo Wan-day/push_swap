@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 	b = NULL;
 	bench.strategy = opts.strategy;
 	bench.disorder = calculate_disorder(a, count);
-	assign_ranks(a, count);
+	assign_ranks(&a, count);
 	if (!is_sorted(a, count))
 		sort_stack(&a, &b, &bench, count);
 	if (opts.bench)

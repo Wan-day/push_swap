@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-```
+#include "push_swap.h"
+
 t_stack	*rmv_top(t_stack **s1)
 {
 	t_stack	*x;
@@ -84,4 +84,3 @@ void	pb(t_stack **a, t_stack **b, t_bench *bench)
 		bench->op_count[OP_PB]++;
 	}
 }
-```
