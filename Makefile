@@ -3,20 +3,23 @@ CFLAGS		= -Wall -Werror -Wextra
 RM			= rm -f
 
 SRCS_DIR	= main
-SRCS		= $(SRCS_DIR)/bench_utils_1.c \
+UTILS_DIR	= $(SRCS_DIR)/utils
+OP_DIR		= $(SRCS_DIR)/operations
+ALG_DIR		= $(SRCS_DIR)/sorting
+SRCS		= $(UTILS_DIR)/bench_utils_1.c \
 			  $(SRCS_DIR)/main.c \
-			  $(SRCS_DIR)/main_utils_3.c \
-			  $(SRCS_DIR)/push.c \
-			  $(SRCS_DIR)/swap.c \
-			  $(SRCS_DIR)/complex_sort.c \
-			  $(SRCS_DIR)/main_utils_1.c \
-			  $(SRCS_DIR)/main_utils_4.c \
-			  $(SRCS_DIR)/rev_rot.c \
-			  $(SRCS_DIR)/helper_utils_1.c \
-			  $(SRCS_DIR)/main_utils_2.c \
-			  $(SRCS_DIR)/rot.c \
-			  $(SRCS_DIR)/simple_sort.c \
-			  $(SRCS_DIR)/medium_sort.c
+			  $(UTILS_DIR)/main_utils_3.c \
+			  $(OP_DIR)/push.c \
+			  $(OP_DIR)/swap.c \
+			  $(ALG_DIR)/complex_sort.c \
+			  $(UTILS_DIR)/main_utils_1.c \
+			  $(UTILS_DIR)/main_utils_4.c \
+			  $(OP_DIR)/rev_rot.c \
+			  $(UTILS_DIR)/helper_utils_1.c \
+			  $(UTILS_DIR)/main_utils_2.c \
+			  $(OP_DIR)/rot.c \
+			  $(ALG_DIR)/simple_sort.c \
+			  $(ALG_DIR)/medium_sort.c
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -46,7 +49,9 @@ NAME		= push_swap
 
 OBJS		= $(SRCS:.c=.o)
 
-all:	$(NAME)
+all: $(NAME)
+
+both: all bonus
 
 $(OBJS): includes/push_swap.h
 
@@ -97,4 +102,10 @@ b_fclean: b_clean
 
 b_re: b_fclean bonus
 
-.PHONY: all clean fclean re bonus b_clean b_fclean b_re
+clean_all: clean b_clean
+
+fclean_all: fclean b_fclean
+
+re_all: re b_re
+
+.PHONY: all clean fclean re bonus b_clean b_fclean b_re both clean_all fclean_all re_all
