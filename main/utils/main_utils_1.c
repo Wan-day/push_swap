@@ -72,8 +72,8 @@ t_stack	*build_stack(int *nums, int count)
 
 /*
 Reads argv completely: options, numbers, validation, and builds stack a.
-*count receives the number of elements. Returns NULL (with nothing to
-free) if argv holds no number. Temporary arrays are freed here.
+*count receives the number of elements. Returns NULL (with nothing to free)
+if argv holds no number. Temporary arrays are freed here.
 */
 t_stack	*load_stack(int argc, char **argv, t_options *opts, int *count)
 {
