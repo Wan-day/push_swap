@@ -6,7 +6,7 @@
 /*   By: duk <duk@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 13:09:19 by duk               #+#    #+#             */
-/*   Updated: 2026/09/29 15:33:52 by duk              ###   ########.fr       */
+/*   Updated: 2026/09/29 19:42:00 by duk              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ins_pos finds the position where num can be placed in stack b,
 the main reason is to have the stack b sorted decending
 */
+
 int	find_pos(t_stack **b, int size_b, int num)
 {
 	t_stack	*node;
@@ -24,11 +25,15 @@ int	find_pos(t_stack **b, int size_b, int num)
 	if ((*b) == NULL)
 		return (0);
 	node = (*b);
+	if (node->next == (*b))
+		return (0);
 	pos = 0;
 	while (pos < size_b)
 	{
-		if (node->num < num)
-			return (pos);
+		if (node->num > num && num > node->next->num)
+			return (pos + 1);
+		if ((node->num < node->next->num) && (node->num > num || num > node->next->num))
+			return (pos + 1);
 		node = node->next;
 		pos++;
 	}
@@ -94,13 +99,49 @@ void	min_max(t_stack **a, int *min, int*max)
 	}
 }
 
+int	find_top(t_stack **b)
+{
+	t_stack	*node;
+	int		pos_max;
+	int		pos;
+	int		max;
+
+	if ((*b) == NULL)
+		return (0);
+	node = (*b);
+	max = (*b)->num;
+	pos_max = 0;
+	pos = 0;
+	while (node->next != (*b))
+	{
+		node = node->next;
+		pos++;
+		if (node->num > max)
+		{
+			max = node->num;
+			pos_max = pos;
+		}
+	}
+	return (pos_max);
+}
+
 void	medium_sort(t_stack **a, t_stack **b, t_bench *bench, int size)
 {
 	int	count;
 	int	node_count;
 	int	index;
+	int	chunk;
+	int min;
+	int max;
+	int chunk_count;
+	int	size_b;
+	int	num;
+	int	pos;
+	t_stack	*node;
 
+	size_b = 0;
 	chunk = 0;
+	chunk_count = chunk_number(size);
 	min_max(a, &min, &max);
 	while (chunk < chunk_count)
 	{
@@ -126,4 +167,7 @@ void	medium_sort(t_stack **a, t_stack **b, t_bench *bench, int size)
 		}
 		chunk++;
 	}
+	top_put(b, bench, size_b, (find_top(b)));
+	while ((*b) != NULL)
+		pa (a, b, bench);
 }
