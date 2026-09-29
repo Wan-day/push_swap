@@ -58,12 +58,26 @@ static void	print_op_lines(t_bench *bench)
 	ft_putchar_fd('\n', 2);
 }
 
+/* Calculates the total operations done by the algorithm */
+static void bench_total(t_bench *bench)
+{
+	int	i;
+
+	i = 0;
+	while (i < OP_COUNT)
+	{
+		bench->total_ops += bench->op_count[i];
+		i++;
+	}
+}
+
 /*
-** Prints the benchmark on stderr: disorder, strategy, total number of
-** operations and the count of each operation.
+Prints the benchmark on stderr: disorder, strategy, total number of
+operations and the count of each operation.
 */
 void	print_benchmark(t_bench *bench)
 {
+	bench_total(bench);
 	print_disorder(bench->disorder);
 	ft_putstr_fd("[bench] strategy: ", 2);
 	ft_putendl_fd(strategy_name(bench->strategy), 2);

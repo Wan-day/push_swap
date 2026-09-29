@@ -1,5 +1,3 @@
-
-
 #include "bonus.h"
 
 static t_stack	*rmv_top(t_stack **s1)

@@ -89,7 +89,10 @@ static char	*ft_get_line(t_view *res)
 		temp = ft_strndup(res->content, pos);
 		leak = res->content;
 		res->size -= pos;
-		res->content = ft_strndup(&res->content[pos], res->size);
+		if (res->size == 0)
+			res->content = NULL;
+		else
+			res->content = ft_strndup(&res->content[pos], res->size);
 		free(leak);
 	}
 	else
