@@ -46,7 +46,9 @@ int	is_sorted(t_stack *a, int size)
 	int		i;
 	t_stack	*node;
 
-	if (!a || size < 2)
+	if (size == 0)
+		return (0);
+	else if (!a || size < 2)
 		return (1);
 	node = a;
 	i = 0;
