@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_utils_2.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dboldino <dboldino@student.42prague.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/30 16:17:33 by dboldino          #+#    #+#             */
+/*   Updated: 2026/09/30 17:00:29 by dboldino         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 /*
@@ -75,4 +87,19 @@ char	**extract_options(int argc, char **argv, t_options *opts)
 	}
 	res[j] = NULL;
 	return (res);
+}
+
+/*
+Prints the benchmark on stderr: disorder, strategy, total number of
+operations and the count of each operation.
+*/
+void	print_benchmark(t_bench *bench)
+{
+	bench_total(bench);
+	print_disorder(bench->disorder);
+	ft_putstr_fd("[bench] strategy: ", 2);
+	ft_putendl_fd(strategy_name(bench->strategy), 2);
+	put_field("[bench] total_ops: ", bench->total_ops);
+	ft_putchar_fd('\n', 2);
+	print_op_lines(bench);
 }

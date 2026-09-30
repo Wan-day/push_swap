@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker_utils_3.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dboldino <dboldino@student.42prague.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/30 16:16:54 by dboldino          #+#    #+#             */
+/*   Updated: 2026/09/30 17:07:03 by dboldino         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "bonus.h"
 
 static int	op_test(char *temp, t_stack **a, t_stack **b)
@@ -46,9 +58,9 @@ int	is_sorted(t_stack *a, int size)
 	int		i;
 	t_stack	*node;
 
-	if (size == 0)
+	if (!a || size < 1)
 		return (0);
-	if (!a || size < 2)
+	if (size == 1)
 		return (1);
 	node = a;
 	i = 0;

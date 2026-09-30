@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dboldino <dboldino@student.42prague.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/30 16:17:12 by dboldino          #+#    #+#             */
+/*   Updated: 2026/09/30 16:22:20 by dboldino         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
@@ -87,6 +99,7 @@ t_stack	*load_stack(int argc, char **argv, t_options *opts, int *count);
 
 /* main_utils_2.c: command line options */
 char	**extract_options(int argc, char **argv, t_options *opts);
+void	print_benchmark(t_bench *bench);
 
 /* main_utils_3.c: parsing and validation of the numbers */
 int		*parse_tokens(char **tokens, int *count);
@@ -98,7 +111,11 @@ void	assign_ranks(t_stack **a, int size);
 void	sort_stack(t_stack **a, t_stack **b, t_bench *bench, int size);
 
 /* bench_utils_1.c: --bench output */
-void	print_benchmark(t_bench *bench);
+void	put_field(char *name, int value);
+void	print_disorder(double disorder);
+char	*strategy_name(int strategy);
+void	print_op_lines(t_bench *bench);
+void	bench_total(t_bench *bench);
 
 /* helper_utils_1.c: error handling and cleanup */
 void	put_error(void);

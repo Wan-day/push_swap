@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_utils_3.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dboldino <dboldino@student.42prague.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/30 16:17:35 by dboldino          #+#    #+#             */
+/*   Updated: 2026/09/30 17:05:09 by dboldino         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 /*
@@ -71,7 +83,7 @@ Splits one token, validates every word and stores the numbers in nums,
 starting at position *idx (which is advanced). On any error, frees what
 this function and nums own, then exits with "Error".
 */
-static void	fill_from_token(char *token, int *nums, int *idx)
+static void	fill_from_token(char *token, int *nums, int *idx, char **tokens)
 {
 	char	**words;
 	int		i;
@@ -80,6 +92,7 @@ static void	fill_from_token(char *token, int *nums, int *idx)
 	if (words == NULL)
 	{
 		free(nums);
+		free(tokens);
 		put_error();
 	}
 	i = 0;
@@ -89,6 +102,7 @@ static void	fill_from_token(char *token, int *nums, int *idx)
 		{
 			free_split(words);
 			free(nums);
+			free(tokens);
 			put_error();
 		}
 		(*idx)++;
@@ -135,20 +149,20 @@ int	*parse_tokens(char **tokens, int *count)
 	nums = ft_calloc(*count, sizeof(int));
 	if (nums == NULL)
 	{
-		free_split(tokens);
+		free(tokens);
 		put_error();
 	}
 	i = 0;
 	idx = 0;
 	while (tokens[i])
 	{
-		fill_from_token(tokens[i], nums, &idx);
+		fill_from_token(tokens[i], nums, &idx, tokens);
 		i++;
 	}
 	if (has_duplicates(nums, *count))
 	{
 		free(nums);
-		free_split(tokens);
+		free(tokens);
 		put_error();
 	}
 	return (nums);
