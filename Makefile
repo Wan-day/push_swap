@@ -107,6 +107,4 @@ clean_all: clean b_clean
 
 fclean_all: fclean b_fclean
 
-re_all: re b_re
-
-.PHONY: all clean fclean re bonus b_clean b_fclean b_re both clean_all fclean_all re_all
+.PHONY: all clean fclean re bonus b_clean b_fclean b_re both clean_all fclean_all

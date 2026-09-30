@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dboldino <dboldino@student.42prague.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/30 16:16:45 by dboldino          #+#    #+#             */
+/*   Updated: 2026/09/30 16:28:42 by dboldino         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "bonus.h"
 
 int	main(int argc, char **argv)
@@ -20,9 +32,9 @@ int	main(int argc, char **argv)
 		temp = get_next_line(0);
 	}
 	if (is_sorted(a, count))
-		ft_printf("\nOK\n");
+		ft_printf("OK\n");
 	else
-		ft_printf("\nKO\n");
+		ft_printf("KO\n");
 	free_stack(&a);
 	free_stack(&b);
 	return (0);

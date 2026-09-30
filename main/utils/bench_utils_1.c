@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bench_utils_1.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dboldino <dboldino@student.42prague.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/30 16:17:25 by dboldino          #+#    #+#             */
+/*   Updated: 2026/09/30 16:23:02 by dboldino         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 /* Prints name followed by the number value on stderr, without newline. */
-static void	put_field(char *name, int value)
+void	put_field(char *name, int value)
 {
 	ft_putstr_fd(name, 2);
 	ft_putnbr_fd(value, 2);
@@ -12,7 +24,7 @@ Prints the disorder as a percentage with 2 decimals ("49.99%").
 The value is rounded to hundredths of a percent and printed with
 integers only.
 */
-static void	print_disorder(double disorder)
+void	print_disorder(double disorder)
 {
 	int	hundredths;
 
@@ -27,7 +39,7 @@ static void	print_disorder(double disorder)
 }
 
 /* Returns the display name of a strategy. */
-static char	*strategy_name(int strategy)
+char	*strategy_name(int strategy)
 {
 	if (strategy == SIMPLE)
 		return ("Simple / O(n^2)");
@@ -39,7 +51,7 @@ static char	*strategy_name(int strategy)
 }
 
 /* Prints the two lines with the number of times each operation was used. */
-static void	print_op_lines(t_bench *bench)
+void	print_op_lines(t_bench *bench)
 {
 	ft_putstr_fd("[bench] ", 2);
 	put_field("sa: ", bench->op_count[OP_SA]);
@@ -59,7 +71,7 @@ static void	print_op_lines(t_bench *bench)
 }
 
 /* Calculates the total operations done by the algorithm */
-static void bench_total(t_bench *bench)
+void	bench_total(t_bench *bench)
 {
 	int	i;
 
@@ -69,19 +81,4 @@ static void bench_total(t_bench *bench)
 		bench->total_ops += bench->op_count[i];
 		i++;
 	}
-}
-
-/*
-Prints the benchmark on stderr: disorder, strategy, total number of
-operations and the count of each operation.
-*/
-void	print_benchmark(t_bench *bench)
-{
-	bench_total(bench);
-	print_disorder(bench->disorder);
-	ft_putstr_fd("[bench] strategy: ", 2);
-	ft_putendl_fd(strategy_name(bench->strategy), 2);
-	put_field("[bench] total_ops: ", bench->total_ops);
-	ft_putchar_fd('\n', 2);
-	print_op_lines(bench);
 }
