@@ -6,22 +6,26 @@
 /*   By: duk <duk@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 13:09:19 by duk               #+#    #+#             */
-/*   Updated: 2026/09/29 19:42:00 by duk              ###   ########.fr       */
+/*   Updated: 2026/09/30 15:59:40 by duk              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*
-ins_pos finds the position where num can be placed in stack b,
-the main reason is to have the stack b sorted decending
+find_pos function finds the position where num fits and returns that 
+position + 1 because it respects the numbers before it 
+(how many numbers before the spot),
+additionally it covers cases where stack b is empty or there is 1 num.
+the num is found in stack b by comapring the 2 neighbors or at the edge of
+stack b where the biggest number and smallest number meets in stack b.
 */
 
 int	find_pos(t_stack **b, int size_b, int num)
 {
 	t_stack	*node;
 	int		pos;
-	
+
 	if ((*b) == NULL)
 		return (0);
 	node = (*b);
@@ -32,7 +36,8 @@ int	find_pos(t_stack **b, int size_b, int num)
 	{
 		if (node->num > num && num > node->next->num)
 			return (pos + 1);
-		if ((node->num < node->next->num) && (node->num > num || num > node->next->num))
+		if ((node->num < node->next->num)
+			&& (node->num > num || num > node->next->num))
 			return (pos + 1);
 		node = node->next;
 		pos++;
@@ -41,133 +46,64 @@ int	find_pos(t_stack **b, int size_b, int num)
 }
 
 /*
-divides the chunk based on stack a's size as root of n
+only the head value in stack a is checked and pushed to stack
+b in its sorted position, if any value in stack a that
+are not within the chunk_limit the value is sent to the bottom
 */
 
-int	chunk_number(int size)
-{
-	int	i;
-
-	i = 1;
-	while (i * i < size)
-	{
-		i++;
-	}
-	return (i);
-}
-
-void	top_put(t_stack **b, t_bench *bench, int size_b, int pos_min)
+static void	p_chunk(t_stack **a, t_stack **b, t_bench *bench, int chunk_limit)
 {
 	int	count;
+	int	size_b;
 
-	count = 0;
-	if (pos_min <= size_b - pos_min)
+	count = count_size(a);
+	while (count > 0)
 	{
-		while (count < pos_min)
+		if ((*a)->num <= chunk_limit)
 		{
-			rb(b, bench);
-			count++;
+			size_b = count_size(b);
+			top_put(b, bench, size_b, find_pos(b, size_b, (*a)->num));
+			pb (a, b, bench);
 		}
-	}
-	else
-	{
-		while (count < size_b - pos_min)
-		{
-			rrb(b, bench);
-			count++;
-		}
+		else
+			ra (a, bench);
+		count--;
 	}
 }
 
-void	min_max(t_stack **a, int *min, int*max)
-{
-	t_stack *node;
+/*
+the function sorts stack a into stack b chunk by chunk,
+afterwards moves it back to a.
 
-	if ((*a) == NULL)
-		return ;
-	node = (*a);
-	*min = node->num;
-	*max = node->num;
-	node = node->next;
-	while (node != (*a))
-	{
-		if (node->num < *min)
-			*min = node->num;
-		if (node->num > *max)
-			*max = node->num;
-		node = node->next;
-	}
-}
+the numbers from min to max are cut into chunk_count equal slices.
+chunk_limit is the highest number of the current chunk (the last
+chunk ends on the highest value), for each chunk, p_chunk moves its numbers
+from a to b. b is kept in order (biggest on top), so each number
+goes to its own spot in b, which later will be rotated
+to push in the values from a.
 
-int	find_top(t_stack **b)
-{
-	t_stack	*node;
-	int		pos_max;
-	int		pos;
-	int		max;
-
-	if ((*b) == NULL)
-		return (0);
-	node = (*b);
-	max = (*b)->num;
-	pos_max = 0;
-	pos = 0;
-	while (node->next != (*b))
-	{
-		node = node->next;
-		pos++;
-		if (node->num > max)
-		{
-			max = node->num;
-			pos_max = pos;
-		}
-	}
-	return (pos_max);
-}
+when a is empty, b is rotated so its max is on top, then every
+number is pushed back to a, biggest first, so a ends up sorted.
+*/
 
 void	medium_sort(t_stack **a, t_stack **b, t_bench *bench, int size)
 {
-	int	count;
-	int	node_count;
-	int	index;
-	int	chunk;
-	int min;
-	int max;
-	int chunk_count;
-	int	size_b;
-	int	num;
-	int	pos;
-	t_stack	*node;
+	int	min;
+	int	max;
+	int	chunk_limit;
+	int	chunk_count;
+	int	chunk_pos;
 
-	size_b = 0;
-	chunk = 0;
-	chunk_count = chunk_number(size);
 	min_max(a, &min, &max);
-	while (chunk < chunk_count)
+	chunk_count = chunk_number(size);
+	chunk_pos = 0;
+	while (chunk_pos < chunk_count)
 	{
-		count = 0;
-		node_count = size - size_b;
-		while (count < node_count)
-		{
-			node = (*a);
-			num = node->num;
-			index = chunk_count * ((double)num - min) / (max - min);
-			if (index == chunk_count)
-				index = chunk_count - 1;
-			if (chunk == index)
-			{
-				pos = find_pos(b, size_b, num);
-				top_put(b, bench, size_b, pos);
-				pb (a, b, bench);
-				size_b++;
-			}
-			else
-				ra(a, bench);
-			count++;
-		}
-		chunk++;
+		chunk_limit = min + (max - min) * (chunk_pos +1) / chunk_count;
+		p_chunk(a, b, bench, chunk_limit);
+		chunk_pos++;
 	}
-	top_put(b, bench, size_b, (find_top(b)));
+	top_put(b, bench, count_size(b), (find_top(b)));
 	while ((*b) != NULL)
 		pa (a, b, bench);
 }

@@ -105,6 +105,13 @@ void	put_error(void);
 void	free_split(char **words);
 void	free_stack(t_stack **stack);
 
+/* medium_sort_utils_1.c: helper for medium sort*/
+void	top_put(t_stack **b, t_bench *bench, int size_b, int pos);
+void	min_max(t_stack **a, int *min, int *max);
+int		find_top(t_stack **b);
+int		chunk_number(int size);
+int		count_size(t_stack **b);
+
 /* sorting functions */
 void	simple_sort(t_stack **a, t_stack **b, t_bench *bench, int size);
 void	medium_sort(t_stack **a, t_stack **b, t_bench *bench, int size);
